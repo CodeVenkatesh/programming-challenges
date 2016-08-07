@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <cmath>
 #include <vector>
 #include <chrono>
@@ -24,7 +25,7 @@ program is a solution to the 3n + 1 problem:
 		returns the maximum length of a cycle for n between 
 		and including those endpoints
 */
-
+//Some comment
 vector<int> generate_sequence(int start_num) //generates sequence mentioned above
 {
 	int t = start_num; //avoid changing the given parameter
