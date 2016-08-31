@@ -5,6 +5,7 @@
 using namespace std;
 
 //display which hand wins in a game of poker
+//Just a comment
 
 bool less_than(int i, int j) { return (i < j); }
 
@@ -27,7 +28,7 @@ void hands(vector<int> black_num, vector<char> black_suit, vector<int> white_num
 	/*puts the suits and numbers inputted into the corresponding vectors*/
 	for(int i = 0; i < 10; i++)
 	{
-		if (i % 2 == 0) 
+		if (i % 2 == 0)
 		{
 			if(hand[i] == 'A') 		{ black_num.push_back(14); }
 			else if(hand[i] == 'K') { black_num.push_back(13); }
@@ -69,9 +70,9 @@ int pair(vector<int> num)
 	int count = 1;
 	for(int i = 1; i < 5; i++)
 	{
-		if(num[i] == num[i - 1]) 
-		{ 
-			return num[i]; 
+		if(num[i] == num[i - 1])
+		{
+			return num[i];
 			count += 1;
 			break;
 		}
@@ -106,7 +107,7 @@ int flush(vector<int> num, vector<char> suit)
 	char a = suit[0];
 	for(int i = 1; i < 5; i++)
 	{
-		
+
 		if(suit[i] == a) { count_suit += 1; }
 	}
 
@@ -125,7 +126,7 @@ int four_of_kind(vector<int> num)
 {
 	int count1 = 1; //counter to see if there are 4 of the same card
 	int count2 = 1;
-	
+
 	int x = num[0];
 	for(int i = 1; i < 4; i++)
 	{
@@ -142,7 +143,3 @@ int four_of_kind(vector<int> num)
 	else if (count2 == 4) { return y; }
 	else 				  { return 0; }
 }
-
-
-
-

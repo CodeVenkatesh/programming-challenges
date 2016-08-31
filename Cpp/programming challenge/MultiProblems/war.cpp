@@ -61,7 +61,7 @@ int main()
 
 void war(queue *a, queue *b)
 {
-	int steps = 0; //number of steps 
+	int steps = 0; //number of steps
 	int x, y; 	   //top cards
 	queue c; 	   //cards involved in war
 	bool in_war = false;

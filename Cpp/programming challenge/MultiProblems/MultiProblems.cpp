@@ -3,10 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include <chrono>
 
 using namespace std;
-using namespace std::chrono;
 
 void printvector(vector<int> path)
 {
@@ -21,8 +19,8 @@ program is a solution to the 3n + 1 problem:
 	if n is even, then divide by 2
 	if n is odd, multiply by 3 and add 1
 	it's conjectured that at least to 1000000 that the program terminates at n = 1
-		the program takes 2 inputs (start and endpoint) and 
-		returns the maximum length of a cycle for n between 
+		the program takes 2 inputs (start and endpoint) and
+		returns the maximum length of a cycle for n between
 		and including those endpoints
 */
 //Some comment
@@ -30,18 +28,18 @@ vector<int> generate_sequence(int start_num) //generates sequence mentioned abov
 {
 	int t = start_num; //avoid changing the given parameter
 	vector<int> holder; //holds the numbers generated in the sequence
-	holder.push_back(t); 
+	holder.push_back(t);
 
 	while (t != 1) //terminate at t = 1
 	{
 		if (t % 2 == 0) //even case
-		{ 
-			t /= 2; 
+		{
+			t /= 2;
 			holder.push_back(t);
 		}
 		else //odd case
-		{ 
-			t = 3 * t + 1; 
+		{
+			t = 3 * t + 1;
 			holder.push_back(t);
 		}
 	}
@@ -68,7 +66,7 @@ int max_cycle(int start, int end)
 program prints the representation of a minesweeper board
 	if mine, print *
 	else, print the number of mines near the square
-		near means all directions (n, s, e, w, ne, nw, se, sw) 
+		near means all directions (n, s, e, w, ne, nw, se, sw)
 		by 1 unit
 */
 
@@ -109,12 +107,12 @@ void representation(int x, int y)
 	}
 
 	/*
-	casework for a couple cases: 
+	casework for a couple cases:
 	first row, middle rows, and last row
 	last row essentially the same conditions as first row but inverted (instead of down, go up, etc)
 	middle row contains more cases
 	each row has a first element, middle elements, and last element
-	casework on each of these three types of elements	
+	casework on each of these three types of elements
 	*/
 	int t1 = clock();
 
@@ -216,7 +214,7 @@ void representation(int x, int y)
 				}
 			}
 
-			
+
 		}
 	}
 
@@ -262,7 +260,7 @@ public:
 vector<char> board_pieces::rook(int x, int y)
 {
 	vector<char> positions; //holds the positions that the rook can move to
-	for (int i = 0; i < 8; i++) 
+	for (int i = 0; i < 8; i++)
 	{
 		if (i != x) { positions.push_back(board[i][y]); }
 	}
@@ -277,7 +275,7 @@ vector<char> board_pieces::rook(int x, int y)
 vector<char> board_pieces::pawn(int x, int y)
 {
 	vector<char> positions;
-	
+
 	positions.push_back(board[x + 1][y - 1]);
 	positions.push_back(board[x + 1][y + 1]);
 
@@ -338,38 +336,8 @@ vector<char> board_pieces::queen(int x, int y)
 
 int main()
 {
-	board_pieces b;
-
-	for (int i = 0; i < 8; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			cin >> b.board[i][j];
-		}
-	}
-
-	for (int i = 0; i < 8; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			for (int k = 0; k < b.queen(4, 3).size(); k++)
-			{
-				if (b.queen(4,3)[k] == b.board[i][j]) { b.board[i][j] = '*'; }
-			}
-		}
-	}
-
-	for (int i = 0; i < 8; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			cout << b.board[i][j] << " "
-				;
-		}
-		cout << endl;
-	}
-	cout << endl;
-
-	system("pause");
+	int x, y;
+	cin >> x >> y;
+	representation(x, y);
 	return 0;
 }
