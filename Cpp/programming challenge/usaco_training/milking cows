@@ -1,0 +1,93 @@
+/*
+ID: venkatesh1
+PROG: milk2
+LANG: C++
+*/
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <utility>
+#include <algorithm>
+using namespace std;
+
+
+ifstream fin("milk2.in");
+ofstream fout("milk2.out");
+
+vector<pair<int, int> > cin_work()
+{
+	int num_of_farmers;
+	fin >> num_of_farmers;
+
+	pair<int, int> start_end;
+	vector<pair<int, int> > container;
+
+	for (int i = 0; i < num_of_farmers; i++)
+	{
+		int start_time;
+		int end_time;
+		fin >> start_time >> end_time;
+		start_end = make_pair(start_time, end_time);
+		container.push_back(start_end);
+	}
+
+	return container;
+}
+
+//used to sort pairs based on first element
+bool pairCompare(const pair<int, int>& firstElem, const std::pair<int, int>& secondElem)
+{
+	return firstElem.first < secondElem.first;
+}
+
+pair<int, int> time_calculations(vector<pair<int, int> > vp)
+{
+	sort(vp.begin(), vp.end(), pairCompare);
+
+	int min_start_time = vp[0].first;
+	int max_end_time = vp[0].second;
+	int longest_idle_time = 0;
+	vector<int> all_possible_values;
+
+	for (int i = 1; i < vp.size(); i++)
+	{
+		//if current max_end_time is not within the next time, replace both, set longest_idle_time
+		//there can be many possible milking times before the change occurs, so we store all of them in
+		//all_possible_values
+		if (max_end_time - vp[i].first < 0 || max_end_time > vp[i].second)
+		{
+			all_possible_values.push_back(max_end_time - min_start_time);
+			min_start_time = vp[i].first;
+			max_end_time = vp[i].second;
+			//replace longest_idle_time only if the new value is larger than the current value
+			if (vp[i].first - vp[i - 1].second > longest_idle_time)
+			{
+				longest_idle_time = vp[i].first - vp[i - 1].second;
+			}
+		}
+
+		//if current max_end_time is within the next time, replace only it
+		else
+		{
+			max_end_time = vp[i].second;
+			all_possible_values.push_back(max_end_time - min_start_time);
+		}
+	}
+
+	//we want the largest value of the continuous milking time
+	sort(all_possible_values.begin(), all_possible_values.end());
+	int longest_continuous_time = all_possible_values[all_possible_values.size() - 1];
+
+	pair<int, int> p;
+	p = make_pair(longest_continuous_time, longest_idle_time);
+	return p;
+}
+
+int main()
+{
+	vector<pair<int, int> > vp = cin_work();
+	fout << endl << time_calculations(vp).first << " " << time_calculations(vp).second << endl;
+
+	return 0;
+}

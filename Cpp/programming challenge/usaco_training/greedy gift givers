@@ -1,0 +1,64 @@
+/*
+ID: venkatesh1
+PROG: gift1
+LANG: C++
+*/
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+string people [10] ;
+int amount ;
+int NG = 1;
+int NP ;
+int money [10] ;
+
+int finder (string name)
+{
+		for (int i=0; i<NP; i++)
+		{
+			if (name == people[i])
+			{
+				return i ;
+			}
+		}
+		return 99 ;
+}
+
+int main()
+{
+
+    ofstream fout ("gift1.out");
+    ifstream fin ("gift1.in");
+
+		fin >> NP ;
+		for (int i=0; i<NP; i++)
+		{
+			fin >> people[i] ;
+			money[i] = 0 ;
+		}
+		for (int x =NP; x>0; x--)
+		{
+			string inputName ;
+			fin >> inputName ;
+			int senderNumber = finder (inputName) ;
+			fin >> amount ;
+			fin >> NG ;
+			for (int i=0; i<NG; i++)
+			{
+				fin >> inputName ;
+				int giverNumber = finder (inputName);
+				money[senderNumber] -= int(amount / NG);
+				money[giverNumber] += int(amount / NG);
+			}
+
+
+		}
+		for(int i=0; i<NP; i++)
+		{
+			fout << people[i] << " " << money[i] << endl;
+		}
+
+		return 0;
+}

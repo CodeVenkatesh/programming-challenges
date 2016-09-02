@@ -1,0 +1,213 @@
+/*
+ID: venkatesh1
+PROG: transform
+LANG: C++
+*/
+
+#include <iostream>
+#include <algorithm>
+#include <fstream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int num_lines()
+{
+	int N;
+	cin >> N;
+	return N;
+}
+
+vector<string> gen_board()
+{
+	vector<string> board;
+
+	for (int i = 0; i < num_lines(); i++)
+	{
+		string s;
+		cin >> s;
+		board.push_back(s);
+	}
+
+	return board;
+}
+
+string gen_col_vector(vector<string> board, int index)
+{
+	string s;
+	s.resize(board.size());
+
+	for (int i = 0; i < board.size(); i++)
+	{
+		s.push_back(board[i][index]);
+	}
+
+	return s;
+}
+
+string gen_row_vector(vector<string> board, int index)
+{
+	return board[index];
+}
+
+//to generate the 90 degree rotation of the board
+//note that it's the same as reversing all of the columns of board
+vector<string> rotation_90(vector<string> board)
+{
+	vector<string> board1;
+	for (int i = board.size() - 1; i >= 0; i--)
+	{
+		board1.push_back(gen_col_vector(board, i));
+	}
+
+	return board1;
+}
+
+//to generate the 180 degree rotation of the board
+//note that it's the same as reversing all of the rows of board
+vector<string> rotation_180(vector<string> board)
+{
+	reverse(board.begin(), board.end());
+	return board;
+}
+
+//to generate the 270 degree rotation of the board
+//note that it's the same as calling a 180 degree rotation on the 90 degree rotation
+vector<string> rotation_270(vector<string> board)
+{
+	return rotation_180(rotation_90(board));
+}
+
+//to generate the reflection of the board
+//note that it's the same as reversing each row string
+vector<string> reflection(vector<string> board)
+{
+	vector<string> rev_rows;
+	for (int i = 0; i < board.size(); i++)
+	{
+		reverse(board[i].begin(), board[i].end());
+		rev_rows.push_back(board[i]);
+	}
+
+	return rev_rows;
+}
+
+//combination = reflection(rotation_90) || reflection(rotation_180) || reflection(rotation_270)
+vector<string> combination_90(vector<string> board)
+{
+	return reflection(rotation_90(board));
+}
+
+vector<string> combination_180(vector<string> board)
+{
+	return reflection(rotation_180(board));
+}
+
+vector<string> combination_270(vector<string> board)
+{
+	return reflection(rotation_270(board));
+}
+
+int board_condition()
+{
+	vector<string> board1 = gen_board();
+	vector<string> board2 = gen_board();
+
+	int count = 0;
+	for (int i = 0; i < board1.size(); i++)
+	{
+		if (board1[i].compare(rotation_90(board2)[i]) == 0)
+		{
+			count += 1;
+		}
+	}
+
+	int count1 = 0;
+	for (int i = 0; i < board1.size(); i++)
+	{
+		if (board1[i].compare(rotation_180(board2)[i]) == 0)
+		{
+			count1 += 1;
+		}
+	}
+
+	int count2 = 0;
+	for (int i = 0; i < board1.size(); i++)
+	{
+		if (board1[i].compare(rotation_270(board2)[i]) == 0)
+		{
+			count2 += 1;
+		}
+	}
+
+	int count3 = 0;
+	for (int i = 0; i < board1.size(); i++)
+	{
+		if (board1[i].compare(reflection(board2)[i]) == 0)
+		{
+			count3 += 1;
+		}
+	}
+
+	int count4 = 0;
+	for (int i = 0; i < board1.size(); i++)
+	{
+		if (board1[i].compare(combination_90(board2)[i]) == 0 ||
+			board1[i].compare(combination_180(board2)[i]) == 0 ||
+			board1[i].compare(combination_270(board2)[i]) == 0)
+		{
+			count3 += 1;
+		}
+	}
+
+	int count5 = 0;
+	for (int i = 0; i < board1.size(); i++)
+	{
+		if (board1[i].compare(board2[i]) == 0)
+		{
+			count5 += 1;
+		}
+	}
+
+	if (count == board1.size())
+	{
+		return 1;
+	}
+
+	if (count1 == board1.size())
+	{
+		return 2;
+	}
+
+	if (count2 == board1.size())
+	{
+		return 3;
+	}
+
+	if (count3 == board1.size())
+	{
+		return 4;
+	}
+
+	if (count4 == board1.size())
+	{
+		return 5;
+	}
+
+	if (count5 == board1.size())
+	{
+		return 6;
+	}
+
+	else
+	{
+		return 7;
+	}
+}
+
+int main()
+{
+	board_condition();
+
+	return 0;
+}
