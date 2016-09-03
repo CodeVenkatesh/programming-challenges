@@ -11,21 +11,15 @@ LANG: C++
 #include <string>
 using namespace std;
 
-int num_lines()
-{
-	int N;
-	cin >> N;
-	return N;
-}
 
-vector<string> gen_board()
+vector<string> gen_board(int N)
 {
 	vector<string> board;
 
-	for (int i = 0; i < num_lines(); i++)
+	for (int i = 0; i < N; i++)
 	{
 		string s;
-		cin >> s;
+		getline(cin, s);
 		board.push_back(s);
 	}
 
@@ -35,8 +29,6 @@ vector<string> gen_board()
 string gen_col_vector(vector<string> board, int index)
 {
 	string s;
-	s.resize(board.size());
-
 	for (int i = 0; i < board.size(); i++)
 	{
 		s.push_back(board[i][index]);
@@ -110,8 +102,12 @@ vector<string> combination_270(vector<string> board)
 
 int board_condition()
 {
-	vector<string> board1 = gen_board();
-	vector<string> board2 = gen_board();
+	int N;
+	cin >> N;
+	vector<string> board1 = gen_board(N + 1);
+	board1.erase(board1.begin());
+	vector<string> board2 = gen_board(N);
+
 
 	int count = 0;
 	for (int i = 0; i < board1.size(); i++)
@@ -207,7 +203,7 @@ int board_condition()
 
 int main()
 {
-	board_condition();
+	cout << board_condition() << endl;
 
 	return 0;
 }
